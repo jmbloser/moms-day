@@ -367,6 +367,8 @@
 <div id="app"></div>
 <div class="toast" id="toast"></div>
 
+<script src="https://www.gstatic.com/firebasejs/12.17.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.17.1/firebase-database-compat.js"></script>
 <script>
 /* ============ Icons ============ */
 const ICONS = {
@@ -382,6 +384,20 @@ const ICONS = {
   lock:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>`,
   gear:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>`
 };
+
+/* ============ Firebase config ============ */
+/* Paste the config object from Firebase Console > Project Settings > Your apps > SDK setup and configuration */
+const firebaseConfig = {
+  apiKey: "AIzaSyDspG_i-0a3osKTnNZDHYg7RJLB6kEgFLU",
+  authDomain: "moms-day-5bbf9.firebaseapp.com",
+  databaseURL: "https://moms-day-5bbf9-default-rtdb.firebaseio.com",
+  projectId: "moms-day-5bbf9",
+  storageBucket: "moms-day-5bbf9.firebasestorage.app",
+  messagingSenderId: "159477701781",
+  appId: "1:159477701781:web:a4d8a4ccbfbbd9a2590f9c"
+};
+const CONFIG_READY = firebaseConfig.apiKey && !String(firebaseConfig.apiKey).includes('PASTE');
+let dbRef = null;
 
 /* ============ Data ============ */
 const DEFAULT_DATA = {
@@ -405,21 +421,27 @@ const MODE = params.get('caregiver') === '1' ? 'caregiver' : 'mom';
 
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
-async function loadData(){
-  try{
-    const res = await window.storage.get('hub-data', true);
-    if(res && res.value){
-      const parsed = JSON.parse(res.value);
-      return Object.assign({}, DEFAULT_DATA, parsed);
-    }
-  }catch(e){ /* no data yet */ }
-  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+function mergeDefaults(val){
+  return Object.assign({}, DEFAULT_DATA, val || {});
 }
+
 async function saveData(){
   try{
-    await window.storage.set('hub-data', JSON.stringify(DATA), true);
+    await dbRef.set(DATA);
     showToast('Saved');
   }catch(e){ console.error('save failed', e); showToast('Could not save — check connection'); }
+}
+
+function renderSetupNotice(){
+  document.getElementById('app').innerHTML = `
+    <div class="pin-wrap" style="min-height:70vh;">
+      <div class="pin-card" style="max-width:380px;">
+        ${ICONS.gear}
+        <h2>Almost there</h2>
+        <p style="text-align:left;">This app needs its Firebase details filled in before it can save or sync anything. Open <code>index.html</code>, find the <code>firebaseConfig</code> section near the top of the script, and paste in the config values from your Firebase project (Project Settings → Your apps → SDK setup and configuration). Then save and re-upload the file.</p>
+      </div>
+    </div>
+  `;
 }
 
 function showToast(msg){
@@ -572,21 +594,26 @@ function escapeHtml(s){
 }
 function escapeAttr(s){ return escapeHtml(s); }
 
-/* Polling so her screen picks up caregiver changes without her doing anything */
-let lastSnapshot = '';
-async function pollForUpdates(){
-  try{
-    const fresh = await loadData();
-    const snap = JSON.stringify(fresh);
-    if(snap !== lastSnapshot){
-      const typingValue = document.getElementById('newTodoInput') ? document.getElementById('newTodoInput').value : '';
-      DATA = fresh;
-      lastSnapshot = snap;
-      renderMomView();
-      const ni = document.getElementById('newTodoInput');
-      if(ni && typingValue) ni.value = typingValue;
+/* Real-time updates: Firebase pushes new data the instant any caregiver saves a change,
+   so her screen (and every caregiver's screen) stays in sync with no polling needed. */
+let firstLoad = true;
+function handleRemoteUpdate(snapshot){
+  const fresh = mergeDefaults(snapshot.val());
+  DATA = fresh;
+  if(MODE === 'caregiver'){
+    if(firstLoad){
+      renderCaregiverGate();
+    }else if(pinVerified){
+      renderCaregiverView();
     }
-  }catch(e){ /* ignore transient errors */ }
+  }else{
+    const ni = document.getElementById('newTodoInput');
+    const typingValue = ni ? ni.value : '';
+    renderMomView();
+    const ni2 = document.getElementById('newTodoInput');
+    if(ni2 && typingValue) ni2.value = typingValue;
+  }
+  firstLoad = false;
 }
 
 /* ============ Caregiver view ============ */
@@ -766,16 +793,20 @@ async function updatePin(value){
 }
 
 /* ============ Init ============ */
-async function init(){
-  DATA = await loadData();
-  lastSnapshot = JSON.stringify(DATA);
-  if(MODE === 'caregiver'){
-    renderCaregiverGate();
-  }else{
-    renderMomView();
+function init(){
+  if(!CONFIG_READY){
+    DATA = mergeDefaults(null);
+    renderSetupNotice();
+    return;
+  }
+  firebase.initializeApp(firebaseConfig);
+  dbRef = firebase.database().ref('hub-data');
+  dbRef.on('value', handleRemoteUpdate, (err)=>{
+    console.error('Firebase read failed', err);
+    showToast('Could not connect — check the Firebase setup');
+  });
+  if(MODE !== 'caregiver'){
     setInterval(updateClockNodes, 1000);
-    setInterval(pollForUpdates, 30000);
-    document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) pollForUpdates(); });
   }
 }
 init();
