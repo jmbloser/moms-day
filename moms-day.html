@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<title>My Day</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="My Day">
+<meta name="theme-color" content="#2F6F62">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAPn0lEQVR4nO3czZUbVR6H4WofNqwIxd5ySGMmATsAOxQIABKANDizhVBmNUvPAkS35VZ3qep+/55nzcGlq9L9v3Ul+2FjKG8/vv/c+xoAavnzp18eel8Df/FGNGbAA9wmENqx0BUZ9gDniYI6LGpBBj5AfYKgDIt4goEP0J8gOMai3cnQBxiXGNjPQu1g6APMRwy8zOK8wOAHmJ8QeJ5FuWLoA6xLDDyyEH8z+AFyCAEBYPADBEsOgdgXbvADcJEYAnEv2OAH4JakEIh5oQY/AHslhMDyL9DgB+ColUNg2Rdm8ANQyooh8Kb3BdRg+ANQ0opzZamiWfENAmAsq5wGLPEiDH4AWps9BKb/CsDwB6CH2efP1AEw++IDMLeZ59CUxxczLzgAa5rtK4HpTgAMfwBGNNt8mioAZltcALLMNKemOK6YaUEBYNvG/0pg+BMAwx+AGY0+v4YOgNEXDwBeMvIcGzYARl40ANhr1Hk2ZACMulgAcMSIc224ABhxkQDgrNHm2zC/UBxtYQCglhH+hsAQJwCGPwBJRph73QNghEUAgNZ6z7+uAdD7xQNATz3nYLcAMPwBoN887P4VAADQXpcA8PQPAI96zMXmAWD4A8DXWs/HpgFg+APAbS3nZLMAMPwB4HWt5mWTADD8AWC/FnOzegAY/gBwv9rz018DBIBAVQPA0z8AHFdzjlYLAMMfAM6rNU+rBIDhDwDl1JirfgMAAIGKB4CnfwAor/R8LRoAhj8A1FNyzhYLAMMfAOorNW/9BgAAAhUJAE//ANBOibnrBAAAAp0OAE//ANDe2fl7KgAMfwDo58wc9hUAAAQ6HACe/gGgv6Pz2AkAAAQ6FACe/gFgHEfmshMAAAh0dwB4+geA8dw7n50AAECguwLA0z8AjOueOe0EAAAC7Q4AT/8AML6989oJAAAE2hUAnv4BYB575rYTAAAI9GoAePoHgPm8Nr+dAABAIAEAAIFeDADH/wAwr5fmuBMAAAh0MwA8/QPA/G7NcycAABBIAABAoGcDwPE/AKzjubnuBAAAAgkAAAj0VQA4/geA9VzPdycAABBIAABAIAEAAIG+CADf/wPAup7OeScAABBIAABAIAEAAIH+CQDf/wPA+i7z3gkAAAQSAAAQSAAAQCABAACBHrbNDwABII0TAAAIJAAAIJAAAIBAAgAAAgkAAAgkAAAgkAAAgEBv/BsAAJDHCQAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAECwP378ufclAJ0IAAh1Gf4iADIJAAh0PfRFAOQRABDm1rAXAZBFAECQ14a8CIAcAgBC7B3uIgAyCAAIcO9QFwGwPgEAizs6zEUArE0AwMLODnERAOsSAAAQSADAoko9vTsFgDUJAFhQ6aEtAmA9AgAWU2tYiwBYiwCAhdQe0iIA1iEAYBGthrMIgDUIAFhA66EsAmB+AgAm12sYiwCYmwCAifUewr3/fOA4AQCTGmX4jnIdwH0EAExotKE72vUArxMAMJlRh+2o1wU8TwDAREYfsqNfH/BIAMAkZhmus1wnpHt4+/H9594XAbxsxqH67tOH3pew/eff/331v/n+1+8aXAmMRwDA4GYc/he9ImDP4L8mBEgjAGBgMw//i5YRcGTwXxMCpBAAMKgVhv9F7QgoMfivCQFW50eAwNRqDP+a/18YhQCAAa309L9t9V5P7SEtAliZAIDBrDb8L0q/rlbDWQSwKgEAA1l1+F+Uen2th7IIYEUCAAax+vC/SHmdMDoBAANIG4pnXm+vp3GnAKxGAEBnacP/IvV1wygEAHSUPgTvff29n8J7//lQkgCATtKH/4V1gD4EAHRg6H1pz3qM8vQ9ynXAWQIAGjP8n2ddoC0BAA0Zci+zPtCOAIBGDLd9rBO0IQCgAUPtPtYL6hMAUJlhdox1g7oEAFRkiJ1j/aAeAQCVGF5lWEeoQwBABYZWWdYTyhMAwBS+//W73pewbds41wFnCQAozNNqHdYVyhIAUJAhVde3P/zW9c/39M9KBAAUYvgDMxEAUIDh306vUwBP/6xGAMBJhj8wIwEAJxj+fbQ+BfD0z4oEABxk+PfVKgIMf1YlAOAAw38MtSPA8GdlAgDuZPiPpVYEGP6s7pveFwAzMfzHdImA//3+r9P/L4OfFAIAdjL8x3cmBAx+0vgKAHYw/Ofy7Q+/7R7o3//6neFPpIe3H99/7n0RMDLDf17vPn3ofQkwLCcA8ALDf27eP7hNAMANhscavI/wPAEAzzA01uL9hK8JALhiWKzJ+wpfEgAAEEgAwBOeEtfm/YVHAgD+Zjhk8D7DXwQAbIZCGu83CAAwDEJ530knAIhmCGTz/pNMABDL5s+2uQ/IJQCIZNPnKfcDiQQAcWz2PMd9QRoBQBSbPC9xf5BEABDD5s4e7hNSCAAi2NS5h/uFBAKA5dnMOcJ9w+oEAEuziXOG+4eVCQCWZfOmBPcRqxIALMmmTUnuJ1YkAFiOzZoa3FesRgCwFJs0Nbm/WIkAAIBAAoBleDqjBfcZqxAALMGmTEvuN1YgAJiezZge3HfMTgAwNZswPbn/mJkAYFo2X0bgPmRWAoAp2XQZifuRGQkApmOzZUTuS2YjAJiKTZaRuT+ZiQBgGjZXZuA+ZRYCgCnYVJmJ+5UZCACGZzNlRu5bRicAGJpNlJm5fxmZAGBYNk9W4D5mVAKAIdk0WYn7mREJAIZjs2RF7mtGIwAYik2Slbm/GYkAYBg2RxK4zxmFAACAQAKAIXgqIon7nREIALqzGZLIfU9vAoCubIIkc//TkwCgG5sf+BzQjwCgC5sePPJ5oAcBQHM2O/iazwWtCQCassnBbT4ftCQAaMbmBq/zOaEVAUATNjXYz+eFFgQA1dnM4H4+N9QmAKjKJgbH+fxQkwCgGpsXnOdzRC0CgCpsWlCOzxM1CACKs1lBeT5XlCYAKMomBfX4fFGSAKAYmxPU53NGKQKAImxK0I7PGyUIAAAIJAA4zdMItOdzx1kCgFNsQtCPzx9nCAAOs/lAfz6HHCUAOMSmA+PweeQIAcDdbDYwHp9L7iUAuItNBsbl88k9BAC72VxgfD6n7CUA2MWmAvPweWWPh7cf33/ufRGwl42N0b379KH3JcAuTgAAIJAAAIBAAgAAAgkAAAgkAAAgkAAAgEACAAACCQAACCQAACCQAACAQAIAAAIJAAAIJAAAIJAAAIBAAgAAAgkAAAgkAAAgkAAAgEACAAACCQAACCQAACCQAACAQAIAAAIJAAAIJAAAIJAAAIBAAgAAAgkAAAgkAAAgkAAAgEACAAACCQAACCQAACCQAACAQAIAAAIJAAAIJAAAIJAAAIBAAgAAAgkAAAgkAAAgkAAAgEACAAACCQAACCQAACCQAACAQAIAAAIJAAAI9E3vCwC+9u7Th96XUNwfP/7c+xKAJ5wAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABDo4e3H9597XwQA0JYTAAAIJAAAIJAAAIBAAgAAAgkAAAj05s+ffnnofREAQFtOAAAgkAAAgEACAAACCQAACCQAACCQAACAQAIAAAK92bZt828BAECOP3/65cEJAAAEEgAAEEgAAEAgAQAAgf4JAD8EBID1Xea9EwAACCQAACCQAACAQF8EgN8BAMC6ns55JwAAEEgAAEAgAQAAgb4KAL8DAID1XM93JwAAEEgAAECgZwPA1wAAsI7n5roTAAAIJAAAINDNAPA1AADM79Y8dwIAAIFeDACnAAAwr5fmuBMAAAgkAAAg0KsB4GsAAJjPa/PbCQAABNoVAE4BAGAee+a2EwAACLQ7AJwCAMD49s5rJwAAEOiuAHAKAADjumdOOwEAgEB3B4BTAAAYz73z2QkAAAQ6FABOAQBgHEfmshMAAAh0OACcAgBAf0fnsRMAAAh0KgCcAgBAP2fm8OkTABEAAO2dnb++AgCAQEUCwCkAALRTYu46AQCAQMUCwCkAANRXat4WPQEQAQBQT8k5W/wrABEAAOWVnq9+AwAAgaoEgFMAACinxlytdgIgAgDgvFrztOpXACIAAI6rOUf9BgAAAlUPAKcAAHC/2vOzyQmACACA/VrMzWZfAYgAAHhdq3nZ9DcAIgAAbms5J5v/CFAEAMDXWs/HLn8LQAQAwKMec9FfAwSAQN0CwCkAAPSbh11PAEQAAMl6zsHuXwGIAAAS9Z5/3QNg2/ovAgC0NMLc634B195+fP+59zUAQA0jDP6LIU4AnhppcQCglNHm23ABsG3jLRIAnDHiXBsyALZtzMUCgHuNOs+GDYBtG3fRAGCPkefY0AGwbWMvHgDcMvr8GvrirvkbAgCMbvTBfzH8CcBTsywqAJlmmlNTBcC2zbW4AOSYbT5NdbHXfCUAQG+zDf6L6U4Anpp10QFYw8xzaOoA2La5Fx+Aec0+f6a++Gu+EgCgttkH/8USL+KaEACgtFUG/8X0XwE8Z7U3CYC+Vpwry72ga04DADhqxcF/sewLuyYEANhr5cF/sfwLvCYEALglYfBfxLzQa0IAgIukwX8R94KvCQGAXImD/yL2hV8TAgA5kgf/RfwCXBMCAOsy+B9ZiBeIAYD5GfrPsyg7CAGA+Rj8L7M4dxIDAOMy9PezUCeIAYD+DP1jLFpBggCgPgO/DItYkSAAOM/Ar8OiNiYKAG4z7Nv5P4qAECJbIQEXAAAAAElFTkSuQmCC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EDF2EE;
+    --card:#FFFFFF;
+    --text:#1F2E2B;
+    --text-soft:#4B5D57;
+    --teal:#2F6F62;
+    --teal-dark:#1B463C;
+    --amber:#F6C453;
+    --amber-text:#5C3D0A;
+    --brick:#C1502E;
+    --coral:#D96C4A;
+    --blue:#3B6EA5;
+    --plum:#7D5BA6;
+    --border:#DEE7E1;
+    --shadow:0 2px 14px rgba(31,46,43,0.08);
+    --radius:20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Atkinson Hyperlegible", -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top);
+    padding-bottom:env(safe-area-inset-bottom);
+    min-height:100vh;
+  }
+  #app{
+    max-width:520px;
+    margin:0 auto;
+    padding:18px 16px 40px;
+  }
+  h1,h2,h3{margin:0;}
+  section.card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:20px;
+    margin-bottom:16px;
+  }
+  .eyebrow{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:700;
+    color:var(--teal);
+    font-size:1.05rem;
+    margin-bottom:12px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .eyebrow svg{width:22px;height:22px;flex:none;}
+
+  /* ---------- Clock header ---------- */
+  section.clock-card{
+    background:linear-gradient(160deg, var(--teal) 0%, var(--teal-dark) 100%);
+    color:#fff;
+    text-align:center;
+    padding:30px 18px 26px;
+  }
+  .clock-day{
+    font-size:clamp(1.7rem,8vw,2.5rem);
+    font-weight:700;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+  }
+  .clock-date{
+    font-size:clamp(1.05rem,4.4vw,1.35rem);
+    opacity:0.92;
+    margin-top:2px;
+  }
+  .clock-time{
+    font-size:clamp(3rem,15vw,4.4rem);
+    font-weight:700;
+    line-height:1.05;
+    margin-top:14px;
+    font-variant-numeric:tabular-nums;
+  }
+  .clock-part{
+    display:inline-block;
+    margin-top:8px;
+    background:rgba(255,255,255,0.18);
+    padding:6px 18px;
+    border-radius:999px;
+    font-size:1.05rem;
+    font-weight:700;
+  }
+
+  /* ---------- Lists ---------- */
+  .row{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+    font-size:1.15rem;
+  }
+  .row:last-child{border-bottom:none;padding-bottom:0;}
+  .row:first-child{padding-top:0;}
+  .row .time-chip{
+    flex:none;
+    background:var(--bg);
+    color:var(--teal-dark);
+    font-weight:700;
+    font-size:0.95rem;
+    padding:4px 10px;
+    border-radius:8px;
+    white-space:nowrap;
+    margin-top:2px;
+  }
+  .empty-msg{
+    color:var(--text-soft);
+    font-size:1.05rem;
+    padding:6px 0;
+  }
+
+  /* ---------- Reminders ---------- */
+  section.reminders-card{
+    background:var(--amber);
+    color:var(--amber-text);
+  }
+  .reminders-card .eyebrow{color:var(--amber-text);}
+  .reminders-card .row{border-bottom:1px solid rgba(92,61,10,0.18);}
+  .reminders-card .empty-msg{color:rgba(92,61,10,0.75);}
+
+  /* ---------- To-do ---------- */
+  .todo-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .todo-row:last-of-type{border-bottom:none;}
+  .todo-check{
+    flex:none;
+    width:34px;height:34px;
+    border-radius:10px;
+    border:2px solid var(--teal);
+    background:#fff;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+  }
+  .todo-check.done{background:var(--teal);}
+  .todo-check svg{width:20px;height:20px;stroke:#fff;display:none;}
+  .todo-check.done svg{display:block;}
+  .todo-text{font-size:1.15rem;flex:1;}
+  .todo-text.done{text-decoration:line-through;color:var(--text-soft);}
+  .add-row{
+    display:flex;
+    gap:10px;
+    margin-top:14px;
+  }
+  .add-row input[type=text]{
+    flex:1;
+    font-family:inherit;
+    font-size:1.1rem;
+    padding:14px 14px;
+    border-radius:14px;
+    border:2px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+  }
+  .add-row input[type=text]:focus{outline:3px solid var(--teal);outline-offset:1px;}
+  .btn{
+    font-family:inherit;
+    font-size:1.1rem;
+    font-weight:700;
+    border:none;
+    border-radius:14px;
+    padding:14px 20px;
+    cursor:pointer;
+    color:#fff;
+    background:var(--teal);
+    transition:transform 0.08s ease;
+  }
+  .btn:active{transform:scale(0.96);}
+  .btn.small{padding:10px 16px;font-size:1rem;}
+  .btn.ghost{background:transparent;color:var(--brick);border:2px solid var(--brick);}
+  .btn.block{width:100%;}
+
+  /* ---------- Contacts ---------- */
+  .contacts-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .contact-btn{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    padding:18px 10px;
+    border-radius:18px;
+    border:none;
+    color:#fff;
+    font-family:inherit;
+    cursor:pointer;
+    text-decoration:none;
+    min-height:118px;
+    justify-content:center;
+  }
+  .contact-btn:active{transform:scale(0.97);}
+  .contact-avatar{
+    width:52px;height:52px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.25);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.4rem;font-weight:700;
+    background-size:cover;background-position:center;
+    border:2px solid rgba(255,255,255,0.6);
+  }
+  .contact-name{font-size:1.2rem;font-weight:700;}
+  .contact-btn.disabled{opacity:0.55;pointer-events:none;}
+
+  .help-btn{
+    margin-top:14px;
+    width:100%;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    background:var(--brick);
+    color:#fff;
+    padding:18px;
+    border-radius:16px;
+    font-size:1.15rem;
+    font-weight:700;
+    text-decoration:none;
+    border:none;
+  }
+  .help-btn svg{width:24px;height:24px;flex:none;}
+  .help-btn:active{transform:scale(0.97);}
+
+  /* ---------- Bottom app row ---------- */
+  .app-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .app-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:20px;
+    border-radius:18px;
+    color:#fff;
+    text-decoration:none;
+    font-size:1.2rem;
+    font-weight:700;
+  }
+  .app-btn svg{width:26px;height:26px;flex:none;}
+  .app-btn.mail{background:var(--blue);}
+  .app-btn.messages{background:var(--plum);}
+
+  footer.tiny{
+    text-align:center;
+    color:var(--text-soft);
+    font-size:0.85rem;
+    margin-top:10px;
+    opacity:0.8;
+  }
+  footer.tiny a{color:var(--text-soft);}
+
+  /* ---------- Caregiver view ---------- */
+  .cg-wrap{max-width:560px;margin:0 auto;padding:18px 16px 60px;}
+  .cg-header{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:16px;
+  }
+  .cg-header h1{font-size:1.5rem;color:var(--teal-dark);display:flex;align-items:center;gap:10px;}
+  .cg-header h1 svg{width:26px;height:26px;flex:none;}
+  .cg-note{
+    background:#fff;border:1px solid var(--border);border-radius:14px;
+    padding:12px 14px;color:var(--text-soft);font-size:0.95rem;margin-bottom:18px;
+  }
+  .field-label{font-weight:700;font-size:0.95rem;color:var(--text-soft);margin-bottom:6px;display:block;}
+  .field{margin-bottom:14px;}
+  input[type=text],input[type=tel],input[type=date],input[type=time],input[type=password],input[type=url]{
+    width:100%;
+    font-family:inherit;
+    font-size:1.05rem;
+    padding:12px 14px;
+    border-radius:12px;
+    border:2px solid var(--border);
+    background:#fff;
+    color:var(--text);
+  }
+  input:focus{outline:3px solid var(--teal);outline-offset:1px;}
+  .cg-list-item{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 0;border-bottom:1px solid var(--border);
+  }
+  .cg-list-item .grow{flex:1;font-size:1.05rem;}
+  .cg-list-item .sub{color:var(--text-soft);font-size:0.9rem;}
+  .icon-btn{
+    flex:none;
+    width:38px;height:38px;
+    border-radius:10px;
+    border:none;
+    background:#F4E3DD;
+    color:var(--brick);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+  }
+  .icon-btn svg{width:18px;height:18px;}
+  .contact-edit-row{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .contact-edit-row:last-child{border-bottom:none;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%);
+    background:var(--teal-dark);color:#fff;padding:10px 20px;border-radius:999px;
+    font-weight:700;font-size:0.95rem;opacity:0;transition:opacity 0.25s ease;
+    pointer-events:none;
+  }
+  .toast.show{opacity:1;}
+
+  /* ---------- PIN screen ---------- */
+  .pin-wrap{
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+  }
+  .pin-card{
+    background:#fff;border-radius:24px;box-shadow:var(--shadow);
+    padding:32px 26px;max-width:340px;width:100%;text-align:center;
+  }
+  .pin-card svg{width:44px;height:44px;color:var(--teal);margin-bottom:10px;}
+  .pin-card h2{font-size:1.3rem;margin-bottom:6px;}
+  .pin-card p{color:var(--text-soft);font-size:0.95rem;margin:0 0 18px;}
+  .pin-input{
+    width:100%;font-size:1.6rem;letter-spacing:0.5em;text-align:center;
+    padding:14px;border-radius:14px;border:2px solid var(--border);margin-bottom:14px;
+    font-family:inherit;
+  }
+  .pin-error{color:var(--brick);font-size:0.9rem;margin-bottom:10px;min-height:1.2em;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ Icons ============ */
+const ICONS = {
+  calendar:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>`,
+  pin:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>`,
+  check:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>`,
+  list:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>`,
+  phone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8.1 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.9 2.2z"/></svg>`,
+  mail:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>`,
+  message:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 1 1-3.4-6.5"/><path d="M21 12 12 12"/></svg>`,
+  warn:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17.5h.01"/></svg>`,
+  trash:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>`,
+  lock:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>`,
+  gear:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>`
+};
+
+/* ============ Data ============ */
+const DEFAULT_DATA = {
+  pin: "1234",
+  contacts: [
+    {name:"Reed", phone:"", photo:"", color:"#2F6F62"},
+    {name:"Amy", phone:"", photo:"", color:"#D96C4A"},
+    {name:"Jim", phone:"", photo:"", color:"#3B6EA5"},
+    {name:"Nate", phone:"", photo:"", color:"#7D5BA6"}
+  ],
+  helpContact: {name:"Call for Help", phone:""},
+  reminders: [],
+  events: [],
+  todos: []
+};
+
+let DATA = null;
+let pinVerified = false;
+const params = new URLSearchParams(location.search);
+const MODE = params.get('caregiver') === '1' ? 'caregiver' : 'mom';
+
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+async function loadData(){
+  try{
+    const res = await window.storage.get('hub-data', true);
+    if(res && res.value){
+      const parsed = JSON.parse(res.value);
+      return Object.assign({}, DEFAULT_DATA, parsed);
+    }
+  }catch(e){ /* no data yet */ }
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+async function saveData(){
+  try{
+    await window.storage.set('hub-data', JSON.stringify(DATA), true);
+    showToast('Saved');
+  }catch(e){ console.error('save failed', e); showToast('Could not save — check connection'); }
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._tm);
+  showToast._tm = setTimeout(()=>t.classList.remove('show'), 1600);
+}
+
+/* ============ Date helpers ============ */
+function todayISO(){
+  const d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function fmtDay(d){ return d.toLocaleDateString('en-US',{weekday:'long'}); }
+function fmtDate(d){ return d.toLocaleDateString('en-US',{month:'long', day:'numeric', year:'numeric'}); }
+function fmtTime(d){ return d.toLocaleTimeString('en-US',{hour:'numeric', minute:'2-digit'}); }
+function partOfDay(d){
+  const h = d.getHours();
+  if(h<5) return 'Night';
+  if(h<12) return 'Morning';
+  if(h<17) return 'Afternoon';
+  if(h<21) return 'Evening';
+  return 'Night';
+}
+function fmtEventTime(t){
+  if(!t) return '';
+  const [h,m] = t.split(':').map(Number);
+  const d = new Date(); d.setHours(h,m,0,0);
+  return fmtTime(d);
+}
+function fmtEventDate(iso){
+  const d = new Date(iso+'T00:00:00');
+  return d.toLocaleDateString('en-US',{weekday:'short', month:'short', day:'numeric'});
+}
+
+/* ============ Mom view ============ */
+function updateClockNodes(){
+  const now = new Date();
+  const dayEl = document.getElementById('clockDay');
+  if(!dayEl) return;
+  document.getElementById('clockDay').textContent = fmtDay(now);
+  document.getElementById('clockDate').textContent = fmtDate(now);
+  document.getElementById('clockTime').textContent = fmtTime(now);
+  document.getElementById('clockPart').textContent = partOfDay(now);
+}
+
+function contactInitial(name){ return (name||'?').trim().charAt(0).toUpperCase(); }
+
+function renderMomView(){
+  const now = new Date();
+  const today = todayISO();
+  const todaysEvents = DATA.events
+    .filter(e=>e.date===today)
+    .sort((a,b)=> (a.time||'99:99').localeCompare(b.time||'99:99'));
+
+  const eventsHtml = todaysEvents.length ? todaysEvents.map(e=>`
+    <div class="row">
+      ${e.time ? `<span class="time-chip">${fmtEventTime(e.time)}</span>` : ''}
+      <span>${escapeHtml(e.title)}</span>
+    </div>`).join('') : `<div class="empty-msg">Nothing on the calendar today.</div>`;
+
+  const remindersHtml = DATA.reminders.length ? DATA.reminders.map(r=>`
+    <div class="row">${ICONS.pin.replace('<svg ','<svg style="width:20px;height:20px;flex:none;margin-top:2px;" ')}<span>${escapeHtml(r.text)}</span></div>
+  `).join('') : `<div class="empty-msg">No reminders right now.</div>`;
+
+  const todosHtml = DATA.todos.length ? DATA.todos.map(t=>`
+    <div class="todo-row">
+      <div class="todo-check ${t.done?'done':''}" onclick="toggleTodo('${t.id}')" role="checkbox" aria-checked="${t.done}" tabindex="0">${ICONS.check}</div>
+      <div class="todo-text ${t.done?'done':''}">${escapeHtml(t.text)}</div>
+    </div>
+  `).join('') : `<div class="empty-msg">Nothing on your list yet.</div>`;
+
+  const contactsHtml = DATA.contacts.map(c=>{
+    const has = !!c.phone;
+    const avatarStyle = c.photo ? `style="background-image:url('${escapeAttr(c.photo)}')"` : '';
+    return `<a class="contact-btn ${has?'':'disabled'}" style="background:${c.color}" href="${has?('tel:'+c.phone.replace(/[^0-9+]/g,'')):'#'}">
+      <div class="contact-avatar" ${avatarStyle}>${c.photo?'':contactInitial(c.name)}</div>
+      <div class="contact-name">${escapeHtml(c.name)}</div>
+    </a>`;
+  }).join('');
+
+  const help = DATA.helpContact;
+  const helpHref = help.phone ? ('tel:'+help.phone.replace(/[^0-9+]/g,'')) : '#';
+
+  document.getElementById('app').innerHTML = `
+    <section class="card clock-card">
+      <div class="clock-day" id="clockDay">${fmtDay(now)}</div>
+      <div class="clock-date" id="clockDate">${fmtDate(now)}</div>
+      <div class="clock-time" id="clockTime">${fmtTime(now)}</div>
+      <div class="clock-part" id="clockPart">${partOfDay(now)}</div>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">${ICONS.calendar}Today</div>
+      ${eventsHtml}
+    </section>
+
+    <section class="card reminders-card">
+      <div class="eyebrow">${ICONS.pin}Reminders</div>
+      ${remindersHtml}
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">${ICONS.list}To Do</div>
+      ${todosHtml}
+      <div class="add-row">
+        <input type="text" id="newTodoInput" placeholder="Add something to do…" />
+        <button class="btn" onclick="addTodoFromInput()">Add</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">${ICONS.phone}Call</div>
+      <div class="contacts-grid">${contactsHtml}</div>
+      <a class="help-btn" href="${helpHref}">${ICONS.warn}${escapeHtml(help.name||'Call for Help')}</a>
+    </section>
+
+    <div class="app-row">
+      <a class="app-btn mail" href="mailto:">${ICONS.mail}Mail</a>
+      <a class="app-btn messages" href="sms:">${ICONS.message}Messages</a>
+    </div>
+
+    <footer class="tiny">My Day</footer>
+  `;
+
+  const input = document.getElementById('newTodoInput');
+  input.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'){ addTodoFromInput(); } });
+}
+
+async function toggleTodo(id){
+  const t = DATA.todos.find(x=>x.id===id);
+  if(!t) return;
+  t.done = !t.done;
+  await saveData();
+  renderMomView();
+}
+async function addTodoFromInput(){
+  const input = document.getElementById('newTodoInput');
+  const val = input.value.trim();
+  if(!val) return;
+  DATA.todos.push({id:uid(), text:val, done:false});
+  await saveData();
+  renderMomView();
+}
+
+function escapeHtml(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeAttr(s){ return escapeHtml(s); }
+
+/* Polling so her screen picks up caregiver changes without her doing anything */
+let lastSnapshot = '';
+async function pollForUpdates(){
+  try{
+    const fresh = await loadData();
+    const snap = JSON.stringify(fresh);
+    if(snap !== lastSnapshot){
+      const typingValue = document.getElementById('newTodoInput') ? document.getElementById('newTodoInput').value : '';
+      DATA = fresh;
+      lastSnapshot = snap;
+      renderMomView();
+      const ni = document.getElementById('newTodoInput');
+      if(ni && typingValue) ni.value = typingValue;
+    }
+  }catch(e){ /* ignore transient errors */ }
+}
+
+/* ============ Caregiver view ============ */
+function renderCaregiverGate(){
+  document.getElementById('app').outerHTML = `
+    <div class="pin-wrap" id="app">
+      <div class="pin-card">
+        ${ICONS.lock}
+        <h2>Caregiver Access</h2>
+        <p>Enter the 4-digit code to add or update her day, reminders, to-dos and contacts.</p>
+        <input class="pin-input" id="pinInput" type="tel" inputmode="numeric" maxlength="4" placeholder="••••" autofocus />
+        <div class="pin-error" id="pinError"></div>
+        <button class="btn block" onclick="checkPin()">Unlock</button>
+      </div>
+    </div>
+  `;
+  const pi = document.getElementById('pinInput');
+  pi.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'){ checkPin(); } });
+}
+function checkPin(){
+  const val = document.getElementById('pinInput').value.trim();
+  if(val === (DATA.pin || '1234')){
+    pinVerified = true;
+    renderCaregiverView();
+  }else{
+    document.getElementById('pinError').textContent = 'That code is not correct — try again.';
+  }
+}
+
+function renderCaregiverView(){
+  const eventsList = DATA.events
+    .slice()
+    .sort((a,b)=> (a.date+((a.time)||'')).localeCompare(b.date+((b.time)||'')))
+    .map(e=>`
+    <div class="cg-list-item">
+      <div class="grow">${escapeHtml(e.title)}<div class="sub">${fmtEventDate(e.date)}${e.time?(' · '+fmtEventTime(e.time)):''}</div></div>
+      <button class="icon-btn" onclick="deleteEvent('${e.id}')" aria-label="Delete">${ICONS.trash}</button>
+    </div>`).join('') || `<div class="empty-msg">No events added yet.</div>`;
+
+  const remindersList = DATA.reminders.map(r=>`
+    <div class="cg-list-item">
+      <div class="grow">${escapeHtml(r.text)}</div>
+      <button class="icon-btn" onclick="deleteReminder('${r.id}')" aria-label="Delete">${ICONS.trash}</button>
+    </div>`).join('') || `<div class="empty-msg">No reminders added yet.</div>`;
+
+  const todosList = DATA.todos.map(t=>`
+    <div class="cg-list-item">
+      <div class="todo-check ${t.done?'done':''}" style="width:28px;height:28px;" onclick="toggleTodo('${t.id}'); renderCaregiverView();">${ICONS.check}</div>
+      <div class="grow ${t.done?'sub':''}" style="text-decoration:${t.done?'line-through':'none'}">${escapeHtml(t.text)}</div>
+      <button class="icon-btn" onclick="deleteTodo('${t.id}')" aria-label="Delete">${ICONS.trash}</button>
+    </div>`).join('') || `<div class="empty-msg">Nothing on the list yet.</div>`;
+
+  const contactsEdit = DATA.contacts.map((c,i)=>`
+    <div class="contact-edit-row">
+      <div class="two-col">
+        <div class="field"><span class="field-label">Name</span><input type="text" value="${escapeAttr(c.name)}" onchange="updateContact(${i},'name',this.value)"></div>
+        <div class="field"><span class="field-label">Phone number</span><input type="tel" value="${escapeAttr(c.phone)}" placeholder="e.g. 555-123-4567" onchange="updateContact(${i},'phone',this.value)"></div>
+      </div>
+      <div class="field"><span class="field-label">Photo URL (optional)</span><input type="url" value="${escapeAttr(c.photo)}" placeholder="https://…" onchange="updateContact(${i},'photo',this.value)"></div>
+    </div>
+  `).join('');
+
+  document.getElementById('app').outerHTML = `
+    <div class="cg-wrap" id="app">
+      <div class="cg-header">
+        <h1>${ICONS.gear}<span>Caregiver Settings</span></h1>
+      </div>
+      <div class="cg-note">Changes here show up on her home screen automatically, usually within 30 seconds. You can share this same edit link with other family members helping out — anyone with it can make changes.</div>
+
+      <section class="card">
+        <div class="eyebrow">${ICONS.calendar}Today's & Upcoming Events</div>
+        ${eventsList}
+        <div class="field" style="margin-top:14px;">
+          <div class="three-col">
+            <input type="date" id="evDate">
+            <input type="time" id="evTime">
+            <input type="text" id="evTitle" placeholder="Event title">
+          </div>
+        </div>
+        <button class="btn block" onclick="addEvent()">Add Event</button>
+      </section>
+
+      <section class="card">
+        <div class="eyebrow">${ICONS.pin}Reminders</div>
+        ${remindersList}
+        <div class="add-row" style="margin-top:6px;">
+          <input type="text" id="remText" placeholder="e.g. Nurse visits at 2pm today">
+          <button class="btn" onclick="addReminder()">Add</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="eyebrow">${ICONS.list}To Do List</div>
+        ${todosList}
+        <div class="add-row" style="margin-top:6px;">
+          <input type="text" id="cgTodoText" placeholder="Add a to-do item">
+          <button class="btn" onclick="addTodoCaregiver()">Add</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="eyebrow">${ICONS.phone}Call Contacts</div>
+        ${contactsEdit}
+      </section>
+
+      <section class="card">
+        <div class="eyebrow">${ICONS.warn}Emergency / Help Button</div>
+        <div class="two-col">
+          <div class="field"><span class="field-label">Label</span><input type="text" value="${escapeAttr(DATA.helpContact.name)}" onchange="updateHelp('name',this.value)"></div>
+          <div class="field"><span class="field-label">Phone number</span><input type="tel" value="${escapeAttr(DATA.helpContact.phone)}" onchange="updateHelp('phone',this.value)"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="eyebrow">${ICONS.lock}Security Code</div>
+        <div class="field"><span class="field-label">4-digit caregiver code</span><input type="tel" inputmode="numeric" maxlength="4" value="${escapeAttr(DATA.pin)}" onchange="updatePin(this.value)"></div>
+      </section>
+
+      <footer class="tiny">Her home screen link is this same page without <code>?caregiver=1</code> at the end.</footer>
+    </div>
+  `;
+}
+
+async function addEvent(){
+  const date = document.getElementById('evDate').value;
+  const time = document.getElementById('evTime').value;
+  const title = document.getElementById('evTitle').value.trim();
+  if(!date || !title){ showToast('Add a date and a title'); return; }
+  DATA.events.push({id:uid(), date, time, title});
+  await saveData();
+  renderCaregiverView();
+}
+async function deleteEvent(id){
+  DATA.events = DATA.events.filter(e=>e.id!==id);
+  await saveData();
+  renderCaregiverView();
+}
+async function addReminder(){
+  const el = document.getElementById('remText');
+  const val = el.value.trim();
+  if(!val) return;
+  DATA.reminders.push({id:uid(), text:val});
+  await saveData();
+  renderCaregiverView();
+}
+async function deleteReminder(id){
+  DATA.reminders = DATA.reminders.filter(r=>r.id!==id);
+  await saveData();
+  renderCaregiverView();
+}
+async function addTodoCaregiver(){
+  const el = document.getElementById('cgTodoText');
+  const val = el.value.trim();
+  if(!val) return;
+  DATA.todos.push({id:uid(), text:val, done:false});
+  await saveData();
+  renderCaregiverView();
+}
+async function deleteTodo(id){
+  DATA.todos = DATA.todos.filter(t=>t.id!==id);
+  await saveData();
+  renderCaregiverView();
+}
+async function updateContact(i, field, value){
+  DATA.contacts[i][field] = value;
+  await saveData();
+}
+async function updateHelp(field, value){
+  DATA.helpContact[field] = value;
+  await saveData();
+}
+async function updatePin(value){
+  const v = value.trim();
+  if(!/^\d{4}$/.test(v)){ showToast('Code must be 4 digits'); renderCaregiverView(); return; }
+  DATA.pin = v;
+  await saveData();
+}
+
+/* ============ Init ============ */
+async function init(){
+  DATA = await loadData();
+  lastSnapshot = JSON.stringify(DATA);
+  if(MODE === 'caregiver'){
+    renderCaregiverGate();
+  }else{
+    renderMomView();
+    setInterval(updateClockNodes, 1000);
+    setInterval(pollForUpdates, 30000);
+    document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) pollForUpdates(); });
+  }
+}
+init();
+</script>
+</body>
+</html>
