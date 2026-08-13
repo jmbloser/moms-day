@@ -247,13 +247,18 @@
   .contact-name{font-size:1.2rem;font-weight:700;}
   .contact-btn.disabled{opacity:0.55;pointer-events:none;}
 
+  .help-btn-wrap{
+    margin-top:48px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+  }
   .help-btn{
-    margin-top:6px;
+    margin-top:0;
     width:100%;
     display:flex;align-items:center;justify-content:center;gap:10px;
     background:var(--brick);
     color:#fff;
-    padding:10px;
+    padding:14px;
     border-radius:16px;
     font-size:1.05rem;
     font-weight:700;
@@ -554,12 +559,17 @@ function buildContactsHtml(){
 function renderCallSheet(){
   const sheet = document.getElementById('callSheet');
   if(!sheet) return;
+  const help = DATA.helpContact;
+  const helpHref = help.phone ? ('tel:'+help.phone.replace(/[^0-9+]/g,'')) : '#';
   sheet.innerHTML = `
     <div class="call-sheet-header">
       <h2>Who do you want to call?</h2>
       <button class="close-btn" onclick="closeCallSheet()" aria-label="Close">${ICONS.close}</button>
     </div>
     <div class="contacts-grid">${buildContactsHtml()}</div>
+    <div class="help-btn-wrap">
+      <a class="help-btn" href="${helpHref}">${ICONS.warn}${escapeHtml(help.name||'Call for Help')}</a>
+    </div>
   `;
 }
 function openCallSheet(){
@@ -598,9 +608,6 @@ function renderMomView(){
     </div>
   `).join('') : `<div class="empty-msg">Nothing on your list yet.</div>`;
 
-  const help = DATA.helpContact;
-  const helpHref = help.phone ? ('tel:'+help.phone.replace(/[^0-9+]/g,'')) : '#';
-
   document.getElementById('app').innerHTML = `
     <section class="card clock-card">
       <div class="clock-day" id="clockDay">${fmtDay(now)}</div>
@@ -612,11 +619,19 @@ function renderMomView(){
     <section class="card">
       <div class="eyebrow">${ICONS.calendar}Today</div>
       ${eventsHtml}
+      <div class="add-row">
+        <input type="text" id="newEventInput" placeholder="Add something for today…" />
+        <button class="btn" onclick="addEventFromInput()">Add</button>
+      </div>
     </section>
 
     <section class="card reminders-card">
       <div class="eyebrow">${ICONS.pin}Reminders</div>
       ${remindersHtml}
+      <div class="add-row">
+        <input type="text" id="newReminderInput" placeholder="Add a reminder…" />
+        <button class="btn" onclick="addReminderFromInput()">Add</button>
+      </div>
     </section>
 
     <section class="card">
@@ -631,12 +646,11 @@ function renderMomView(){
     <section class="card">
       <div class="eyebrow">${ICONS.phone}Call</div>
       <button class="call-open-btn" onclick="openCallSheet()">${ICONS.phone}Call Someone</button>
-      <a class="help-btn" href="${helpHref}">${ICONS.warn}${escapeHtml(help.name||'Call for Help')}</a>
     </section>
 
     <div class="app-row">
-      <a class="app-btn mail" href="shortcuts://run-shortcut?name=Open%20Mail">${ICONS.mail}Mail</a>
-      <a class="app-btn messages" href="shortcuts://run-shortcut?name=Open%20Messages">${ICONS.message}Messages</a>
+      <a class="app-btn mail" href="mailto:">${ICONS.mail}Mail</a>
+      <a class="app-btn messages" href="sms:">${ICONS.message}Messages</a>
     </div>
 
     <footer class="tiny">My Day</footer>
@@ -644,6 +658,10 @@ function renderMomView(){
 
   const input = document.getElementById('newTodoInput');
   input.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'){ addTodoFromInput(); } });
+  const evInput = document.getElementById('newEventInput');
+  evInput.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'){ addEventFromInput(); } });
+  const remInput = document.getElementById('newReminderInput');
+  remInput.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'){ addReminderFromInput(); } });
 
   renderCallSheet();
 }
@@ -660,6 +678,22 @@ async function addTodoFromInput(){
   const val = input.value.trim();
   if(!val) return;
   DATA.todos.push({id:uid(), text:val, done:false});
+  await saveData();
+  renderMomView();
+}
+async function addEventFromInput(){
+  const input = document.getElementById('newEventInput');
+  const val = input.value.trim();
+  if(!val) return;
+  DATA.events.push({id:uid(), date: todayISO(), time:'', title: val});
+  await saveData();
+  renderMomView();
+}
+async function addReminderFromInput(){
+  const input = document.getElementById('newReminderInput');
+  const val = input.value.trim();
+  if(!val) return;
+  DATA.reminders.push({id:uid(), text: val});
   await saveData();
   renderMomView();
 }
